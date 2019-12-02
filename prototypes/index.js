@@ -1,15 +1,45 @@
-const { kitties } = require('./datasets/kitties');
-const { clubs } = require('./datasets/clubs');
-const { mods } = require('./datasets/mods');
-const { cakes } = require('./datasets/cakes');
-const { classrooms } = require('./datasets/classrooms');
-const { breweries } = require('./datasets/breweries');
-const { nationalParks } = require('./datasets/nationalParks');
-const { instructors, cohorts } = require('./datasets/turing');
-const { bosses, sidekicks } = require('./datasets/bosses');
-const { constellations, stars } = require('./datasets/astronomy');
-const { weapons, characters } = require('./datasets/ultima');
-const { dinosaurs, humans, movies } = require('./datasets/dinosaurs');
+const {
+  kitties
+} = require('./datasets/kitties');
+const {
+  clubs
+} = require('./datasets/clubs');
+const {
+  mods
+} = require('./datasets/mods');
+const {
+  cakes
+} = require('./datasets/cakes');
+const {
+  classrooms
+} = require('./datasets/classrooms');
+const {
+  breweries
+} = require('./datasets/breweries');
+const {
+  nationalParks
+} = require('./datasets/nationalParks');
+const {
+  instructors,
+  cohorts
+} = require('./datasets/turing');
+const {
+  bosses,
+  sidekicks
+} = require('./datasets/bosses');
+const {
+  constellations,
+  stars
+} = require('./datasets/astronomy');
+const {
+  weapons,
+  characters
+} = require('./datasets/ultima');
+const {
+  dinosaurs,
+  humans,
+  movies
+} = require('./datasets/dinosaurs');
 
 
 
@@ -22,24 +52,33 @@ const { dinosaurs, humans, movies } = require('./datasets/dinosaurs');
 // DATASET: kitties from ./datasets/kitties
 const kittyPrompts = {
   orangeKittyNames() {
-
     // Return an array of just the names of kitties who are orange e.g.
     // ['Tiger', 'Snickers']
-    const result = 'REPLACE WITH YOUR RESULT HERE';
-    return result;
 
-    // Annotation:
-    // Write your annotation here as a comment
+    return filterCat = kitties.reduce((acc, cat) => {
+      if (cat.color === 'orange') {
+        acc.push(cat.name);
+      }
+      return acc;
+    }, []);
   },
+
+  // Annotation:
+  // Since we want to return array of just the kitties who are orange,
+  // we will use the 'reduce' method to simplify our array into another
+  // array of our names. On each iteration we see if the current cats
+  // color is orange. Then if it is we just push that cats name into
+  // our new array and eventually returned when iteration is complete.
 
   sortByAge() {
     // Sort the kitties by their age
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
-    return result;
+    return kitties.sort((a, b) => b.age - a.age);
 
     // Annotation:
-    // Write your annotation here as a comment
+    // To sort we will use the sort method. Which will compare two elements
+    // (a & b). It will subtract b from a and if the result is positive,
+    // shift that element to the left, creating a descending list of ages.
   },
 
   growUp() {
@@ -56,15 +95,22 @@ const kittyPrompts = {
     // },
     // ...etc]
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
-    return result;
+    return kitties.map(cat => {
+      const oldKitties = {};
+      oldKitties.name = cat.name;
+      oldKitties.age = cat.age + 2;
+      oldKitties.color = cat.color;
+      return oldKitties;
+    });
   }
 };
 
-
-
-
-
+// Annotation:
+// Here we want to use map as it allows us to modify our original array and
+// return a new array of the same length with the modifications. So we make
+// a new empty object add give it all the same values of the cats but instead
+// increase the cats age. Then finally just return to add all our older cats
+// into the new array.
 
 // ---------------------------------------------------------------------------
 // ---------------------------------------------------------------------------
@@ -88,14 +134,32 @@ const clubPrompts = {
     //   ...etc
     // }
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
-    return result;
+    const result = clubs.forEach(club => {
+      const answer = {};
+      // console.log(club['club']);
+      club.club = club.members;
 
+
+
+    });
+
+    return result;
     // Annotation:
     // Write your annotation here as a comment
   }
-};
+}
 
+// const boi = clubs.forEach(club => {
+//   if (club.members[0]) {
+//
+//   }
+// })
+// let adjectives = ['fantastic', 'amazing', 'childish'];
+//
+// let wordLength = adjectives.reduce((acc, adjective) => {
+//   acc[adjective] = adjective.length;
+//   return acc;
+// }, {})
 
 
 
@@ -124,11 +188,16 @@ const modPrompts = {
     //   { mod: 4, studentsPerInstructor: 8 }
     // ]
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = mods.map((value, i, a) => {
+      var newObj = {};
+      newObj['mod'] = value.mod;
+      newObj['studentsPerInstructor'] = value.students / value.instructors;
+      return newObj;
+    });
     return result;
-
     // Annotation:
-    // Write your annotation here as a comment
+    // Since we want to return a new array based on the original array, we use map.
+    // We can then create a new object using properties from the mods array.
   }
 };
 
@@ -159,11 +228,17 @@ const cakePrompts = {
     //    ..etc
     // ]
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = cakes.map((value, i, a) => {
+      const flavorStock = {};
+      flavorStock['flavor'] = value.cakeFlavor;
+      flavorStock['inStock'] = value.inStock;
+      return flavorStock;
+    });
     return result;
 
     // Annotation:
-    // Write your annotation here as a comment
+    // Since we want to return a new array based on the original array, we use map.
+    // We can then create a new object using properties from the cakes array.
   },
 
   onlyInStock() {
@@ -187,22 +262,28 @@ const cakePrompts = {
     // ..etc
     // ]
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = cakes.filter(cake => {
+      return cake.inStock > 0;
+    });
     return result;
 
     // Annotation:
-    // Write your annotation here as a comment
+    // Here we would use filter to literally filter through the array to look
+    // for all the cake.inStock with 0 and return them in t
   },
 
   totalInventory() {
     // Return the total amount of cakes in stock e.g.
     // 59
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = cakes.reduce((sum, cake) => {
+      sum += cake.inStock;
+      return sum;
+    }, 0);
     return result;
-
     // Annotation:
-    // Write your annotation here as a comment
+    // Since we just want to return a single value of. We can use reduce to
+    // simply add each cakes stock number into the sum, and return it.
   },
 
   allToppings() {
@@ -210,11 +291,21 @@ const cakePrompts = {
     // every cake in the dataset e.g.
     // ['dutch process cocoa', 'toasted sugar', 'smoked sea salt', 'berries', ..etc]
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = cakes.reduce((acc, cake) => {
+      cake.toppings.forEach(topping => {
+        if (!acc.includes(topping)) {
+          acc.push(topping);
+        }
+      })
+      return acc;
+    }, []);
     return result;
 
     // Annotation:
-    // Write your annotation here as a comment
+    // Since we want to turn an array into a single new array of just toppings.
+    // We use reduce and since we need to also iterate through the toppings
+    // array we use a forEach inside of the reduce to do so and check for
+    // duplicates. If it isnt push into the reduce array.
   },
 
   groceryList() {
@@ -228,11 +319,24 @@ const cakePrompts = {
     //    ...etc
     // }
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = cakes.reduce((acc, cake) => {
+      cake.toppings.forEach(topping => {
+        if(!acc[topping]){
+          acc[topping] = 1;
+        } else {
+          acc[topping] += 1;
+        };
+      })
+      return acc;
+    }, {});
     return result;
 
     // Annotation:
-    // Write your annotation here as a comment
+    // Since we want to just turn this array into an object we can use reduce.
+    // We need to iterate over just our toppings array with a forEach. Each
+    // time checking to see if acc[topping] is equal to the last one, if so
+    // add 1 to it, if not it stays at 1. Then just assign acc[topping] to that
+    // number.
   }
 };
 
@@ -752,7 +856,6 @@ const dinosaurPrompts = {
   uncastActors() {
     /*
     Return an array of objects that contain the names of humans who have not been cast in a Jurassic Park movie (yet), their nationality, and their imdbStarMeterRating. The object in the array should be sorted alphabetically by nationality.
-
     e.g.
       [{
         name: 'Justin Duncan',
@@ -785,7 +888,6 @@ const dinosaurPrompts = {
   actorsAgesInMovies() {
     /*
     Return an array of objects for each human and the age(s) they were in the movie(s) they were cast in, as an array of age(s). Only include humans who were cast in at least one movie.
-
     e.g.
     [ { name: 'Sam Neill', ages: [ 46, 54 ] },
       { name: 'Laura Dern', ages: [ 26, 34 ] },
